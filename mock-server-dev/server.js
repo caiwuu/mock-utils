@@ -1,11 +1,18 @@
 const express = require('express')
 const { createProxyMiddleware } = require('http-proxy-middleware')
 const apiData = require('./apiData')
+const fs = require('fs')
+const crypto = require('crypto')
+const { port, targetServer, ignoredParams, groupMode } = require('./config')
 const app = express()
 const mockData = {
   ...apiData,
 }
-
+fs.write('log.txt', '', (err) => {
+  if (err) {
+    console.error('Error while clearing log file')
+  }
+})
 /** ==============================================================================服务配置=========================================================================== */
 const port = 3000 // 端口
 const targetServer = 'http://192.168.87.170:8088' // 设置目标服务器的地址
